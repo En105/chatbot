@@ -4,109 +4,271 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Chinese Center AI Chatbot</title>
+<title>AI Chatbot Trung Tâm Tiếng Trung</title>
 
 <style>
 
-body{
+/* =========================
+   RESET
+========================= */
+
+*{
     margin:0;
-    font-family:Arial;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
 }
 
-/* Nút mở chatbot */
+/* =========================
+   BUTTON CHAT
+========================= */
 
 #chat-toggle{
+
     position:fixed;
+
     bottom:20px;
     right:20px;
-    background:#d60000;
-    color:white;
+
+    width:58px;
+    height:58px;
+
     border:none;
-    width:65px;
-    height:65px;
+
     border-radius:50%;
-    font-size:28px;
+
+    background:#c40000;
+
+    color:white;
+
+    font-size:24px;
+
     cursor:pointer;
-    box-shadow:0 4px 10px rgba(0,0,0,0.3);
-    z-index:9999;
+
+    box-shadow:0 4px 12px rgba(0,0,0,0.25);
+
+    z-index:999;
+
+    transition:0.3s;
 }
 
-/* Hộp chat */
+#chat-toggle:hover{
+    transform:scale(1.05);
+}
+
+/* =========================
+   CHATBOX
+========================= */
 
 #chatbox{
+
     position:fixed;
-    bottom:95px;
+
+    bottom:90px;
     right:20px;
-    width:350px;
+
+    width:340px;
     height:500px;
+
     background:white;
-    border-radius:15px;
+
+    border-radius:18px;
+
     overflow:hidden;
-    box-shadow:0 4px 15px rgba(0,0,0,0.3);
+
     display:none;
+
     flex-direction:column;
-    z-index:9999;
+
+    box-shadow:0 8px 25px rgba(0,0,0,0.25);
+
+    z-index:999;
 }
 
-/* Header */
+/* =========================
+   HEADER
+========================= */
 
 .chat-header{
-    background:#d60000;
+
+    background:#c40000;
+
     color:white;
+
     padding:15px;
-    font-weight:bold;
-    font-size:18px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
 }
 
-/* Nội dung chat */
+.chat-title{
 
-.chat-body{
+    font-size:16px;
+
+    font-weight:bold;
+}
+
+#close-chat{
+
+    cursor:pointer;
+
+    font-size:20px;
+}
+
+/* =========================
+   BODY
+========================= */
+
+#chat-body{
+
     flex:1;
-    padding:10px;
+
+    padding:12px;
+
     overflow-y:auto;
+
     background:#f5f5f5;
 }
 
-/* Tin nhắn */
+/* =========================
+   MESSAGE
+========================= */
 
 .message{
-    margin:10px 0;
-    padding:10px;
-    border-radius:10px;
-    max-width:80%;
+
+    max-width:85%;
+
+    margin-bottom:12px;
+
+    padding:12px;
+
+    border-radius:14px;
+
     line-height:1.5;
+
+    word-wrap:break-word;
 }
 
 .bot{
+
     background:white;
+
+    color:#222;
 }
 
 .user{
-    background:#d60000;
+
+    background:#c40000;
+
     color:white;
+
     margin-left:auto;
 }
 
-/* Input */
+/* =========================
+   QUICK BUTTONS
+========================= */
+
+.quick-buttons{
+
+    margin-top:10px;
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:8px;
+}
+
+.quick-buttons button{
+
+    border:none;
+
+    padding:8px 12px;
+
+    border-radius:20px;
+
+    background:#ececec;
+
+    cursor:pointer;
+
+    font-size:12px;
+}
+
+.quick-buttons button:hover{
+    background:#ddd;
+}
+
+/* =========================
+   FOOTER
+========================= */
 
 .chat-footer{
+
     display:flex;
+
     border-top:1px solid #ddd;
+
+    background:white;
 }
 
-.chat-footer input{
+#user-input{
+
     flex:1;
-    padding:12px;
+
     border:none;
+
+    padding:14px;
+
     outline:none;
+
+    font-size:14px;
 }
 
-.chat-footer button{
-    background:#d60000;
-    color:white;
+#send-btn{
+
     border:none;
-    padding:12px 18px;
+
+    background:#c40000;
+
+    color:white;
+
+    padding:0 20px;
+
     cursor:pointer;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media screen and (max-width:768px){
+
+    #chatbox{
+
+        width:92%;
+
+        height:72vh;
+
+        right:4%;
+
+        bottom:80px;
+    }
+
+    #chat-toggle{
+
+        width:54px;
+
+        height:54px;
+
+        bottom:15px;
+
+        right:15px;
+    }
+
 }
 
 </style>
@@ -114,62 +276,123 @@ body{
 
 <body>
 
-<button id="chat-toggle">💬</button>
+<!-- BUTTON OPEN -->
+
+<button id="chat-toggle">
+💬
+</button>
+
+<!-- CHATBOX -->
 
 <div id="chatbox">
 
     <div class="chat-header">
-        AI Tư Vấn Tiếng Trung
+
+        <div class="chat-title">
+            AI Tư Vấn Tiếng Trung
+        </div>
+
+        <div id="close-chat">
+            ✕
+        </div>
+
     </div>
 
-    <div class="chat-body" id="chat-body">
+    <div id="chat-body">
 
         <div class="message bot">
-            Xin chào 👋<br><br>
 
-            Tôi có thể hỗ trợ:
-            <br>• Tư vấn khóa học
-            <br>• Tư vấn cơ sở
-            <br>• Giải đáp FAQ
+            Xin chào 👋
+
             <br><br>
 
-            Ví dụ:
-            <br>- học HSK 4
-            <br>- khóa giao tiếp
-            <br>- cơ sở Hà Nội
+            Tôi có thể hỗ trợ:
+
+            <br>• Tư vấn khóa học
+            <br>• Tư vấn cơ sở
+            <br>• Giải đáp thông tin
+
+            <div class="quick-buttons">
+
+                <button onclick="quickAsk('HSK 1-3')">
+                    HSK 1-3
+                </button>
+
+                <button onclick="quickAsk('HSK 4-6')">
+                    HSK 4-6
+                </button>
+
+                <button onclick="quickAsk('giao tiếp')">
+                    Giao tiếp
+                </button>
+
+                <button onclick="quickAsk('địa chỉ')">
+                    Địa chỉ
+                </button>
+
+            </div>
+
         </div>
 
     </div>
 
     <div class="chat-footer">
-        <input type="text" id="user-input" placeholder="Nhập câu hỏi...">
-        <button onclick="sendMessage()">Gửi</button>
+
+        <input
+            type="text"
+            id="user-input"
+            placeholder="Nhập câu hỏi..."
+        >
+
+        <button id="send-btn">
+            Gửi
+        </button>
+
     </div>
 
 </div>
 
 <script>
 
-const toggleBtn = document.getElementById("chat-toggle");
+/* =========================
+   ELEMENTS
+========================= */
+
+const chatToggle = document.getElementById("chat-toggle");
+
 const chatbox = document.getElementById("chatbox");
+
+const closeChat = document.getElementById("close-chat");
+
+const sendBtn = document.getElementById("send-btn");
+
+const userInput = document.getElementById("user-input");
+
 const chatBody = document.getElementById("chat-body");
 
-toggleBtn.onclick = () => {
+/* =========================
+   OPEN CLOSE
+========================= */
 
-    if(chatbox.style.display === "flex"){
-        chatbox.style.display = "none";
-    }else{
-        chatbox.style.display = "flex";
-    }
+chatToggle.onclick = () => {
 
+    chatbox.style.display = "flex";
 };
 
-function addMessage(text, sender){
+closeChat.onclick = () => {
+
+    chatbox.style.display = "none";
+};
+
+/* =========================
+   ADD MESSAGE
+========================= */
+
+function addMessage(text, type){
 
     const div = document.createElement("div");
 
-    div.classList.add("message");
-    div.classList.add(sender);
+    div.className = `message ${type}`;
 
     div.innerHTML = text;
 
@@ -178,214 +401,293 @@ function addMessage(text, sender){
     chatBody.scrollTop = chatBody.scrollHeight;
 }
 
-function botReply(message){
+/* =========================
+   QUICK ASK
+========================= */
+
+function quickAsk(text){
+
+    userInput.value = text;
+
+    sendMessage();
+}
+
+/* =========================
+   BOT REPLY
+========================= */
+
+function getBotReply(message){
 
     message = message.toLowerCase();
 
-    /* ======================
-       KHÓA HỌC
-    ====================== */
+    /* HSK */
 
-    if(message.includes("hsk 1") || message.includes("hsk1")){
+    if(
+        message.includes("hsk 1")
+        || message.includes("hsk1")
+        || message.includes("hsk 1-3")
+    ){
 
         return `
-        📘 Khóa HSK 1-3 phù hợp cho người mới bắt đầu.
+        📘 Khóa HSK 1-3
 
-        ✔ Học phát âm
-        ✔ Giao tiếp cơ bản
-        ✔ Luyện thi HSK
+        <br><br>
 
-        Bạn muốn học online hay offline?
+        ✔ dành cho người mới bắt đầu
+
+        <br>
+        ✔ luyện phát âm
+
+        <br>
+        ✔ giao tiếp cơ bản
+
+        <br>
+        ✔ luyện thi HSK
         `;
     }
 
-    if(message.includes("hsk 4") || message.includes("hsk 5") || message.includes("hsk 6")){
+    if(
+        message.includes("hsk 4")
+        || message.includes("hsk 5")
+        || message.includes("hsk 6")
+        || message.includes("hsk 4-6")
+    ){
 
         return `
-        📗 Khóa HSK 4-6 dành cho học viên muốn nâng cao năng lực tiếng Trung.
+        📗 Khóa HSK 4-6
 
-        ✔ Luyện đề chuyên sâu
-        ✔ Kỹ năng đọc hiểu
-        ✔ Giao tiếp nâng cao
-        ✔ Hỗ trợ thi chứng chỉ
+        <br><br>
+
+        ✔ luyện đề chuyên sâu
+
+        <br>
+        ✔ nâng cao từ vựng
+
+        <br>
+        ✔ hỗ trợ thi chứng chỉ
         `;
     }
+
+    /* GIAO TIẾP */
 
     if(message.includes("giao tiếp")){
 
         return `
-        🗣 Khóa Tiếng Trung Giao Tiếp:
+        🗣 Tiếng Trung Giao Tiếp
+
+        <br><br>
 
         ✔ phản xạ thực tế
-        ✔ giao tiếp đời sống
-        ✔ luyện nói với giáo viên
 
-        Phù hợp người muốn giao tiếp nhanh.
+        <br>
+        ✔ luyện nói
+
+        <br>
+        ✔ tình huống giao tiếp đời sống
         `;
     }
+
+    /* DOANH NGHIỆP */
 
     if(message.includes("doanh nghiệp")){
 
         return `
-        🏢 Khóa Tiếng Trung Doanh Nghiệp:
+        🏢 Tiếng Trung Doanh Nghiệp
+
+        <br><br>
 
         ✔ giao tiếp công việc
+
+        <br>
         ✔ email tiếng Trung
+
+        <br>
         ✔ đàm phán thương mại
-        ✔ từ vựng văn phòng
         `;
     }
+
+    /* BẬN RỘN */
 
     if(message.includes("bận rộn")){
 
         return `
-        ⏰ Khóa Tiếng Trung cho người bận rộn:
+        ⏰ Khóa cho người bận rộn
 
+        <br><br>
+
+        ✔ học tối
+
+        <br>
+        ✔ cuối tuần
+
+        <br>
         ✔ lịch học linh hoạt
-        ✔ học tối/cuối tuần
-        ✔ bài học tinh gọn
         `;
     }
 
-    /* ======================
-       ĐỊA CHỈ
-    ====================== */
+    /* ĐỊA CHỈ */
 
-    if(message.includes("địa chỉ") || message.includes("cơ sở")){
+    if(
+        message.includes("địa chỉ")
+        || message.includes("cơ sở")
+    ){
 
         return `
-        📍 Hệ thống trung tâm:
+        📍 Hệ thống trung tâm
 
         <br><br>
 
-        CS1:
+        <b>CS1</b>
+
         <br>
-        721 Nguyễn Trãi - Phường Chợ Lớn - TP.HCM
+
+        721 Nguyễn Trãi
+        <br>
+        Phường Chợ Lớn - TP.HCM
 
         <br><br>
 
-        CS2:
+        <b>CS2</b>
+
         <br>
-        305 Trần Bình Trọng - Phường Chợ Quán - TP.HCM
+
+        305 Trần Bình Trọng
+        <br>
+        Phường Chợ Quán - TP.HCM
 
         <br><br>
 
-        CS3:
+        <b>CS3</b>
+
         <br>
-        102 Trần Hưng Đạo - Phường An Đông - TP.HCM
+
+        102 Trần Hưng Đạo
+        <br>
+        Phường An Đông - TP.HCM
 
         <br><br>
 
-        CS4:
+        <b>CS4</b>
+
         <br>
+
         102/23 P. Hoàng Đạo Thành
         <br>
         Tân Triều - Khương Đình - Hà Nội
         `;
     }
 
-    if(message.includes("hà nội")){
-
-        return `
-        📍 Cơ sở Hà Nội:
-
-        102/23 P. Hoàng Đạo Thành
-        <br>
-        Tân Triều - Khương Đình - Hà Nội
-        `;
-    }
-
-    /* ======================
-       FAQ
-    ====================== */
-
-    if(message.includes("học phí")){
-
-        return `
-        💰 Học phí sẽ phụ thuộc vào khóa học và hình thức học.
-
-        Vui lòng để lại số điện thoại để tư vấn chi tiết.
-        `;
-    }
+    /* ONLINE */
 
     if(message.includes("online")){
 
         return `
-        💻 Trung tâm có hỗ trợ học online.
+        💻 Trung tâm có lớp học online.
         `;
     }
 
-    if(message.includes("offline")){
+    /* HỌC PHÍ */
+
+    if(message.includes("học phí")){
 
         return `
-        🏫 Trung tâm có lớp học trực tiếp tại TP.HCM và Hà Nội.
+        💰 Học phí phụ thuộc vào khóa học.
+
+        <br><br>
+
+        Vui lòng để lại số điện thoại để được tư vấn chi tiết.
         `;
     }
+
+    /* THỜI GIAN */
 
     if(message.includes("thời gian")){
 
         return `
-        ⏰ Có nhiều khung giờ:
-        <br>
+        ⏰ Có nhiều khung giờ học:
+
+        <br><br>
+
         • sáng
+
         <br>
+
         • chiều
+
         <br>
+
         • tối
+
         <br>
+
         • cuối tuần
         `;
     }
 
-    /* ======================
-       DEFAULT
-    ====================== */
+    /* DEFAULT */
 
     return `
-    Xin lỗi, tôi chưa hiểu câu hỏi 😄
+    Xin lỗi, tôi chưa hiểu câu hỏi.
 
-    Bạn có thể hỏi:
     <br><br>
 
-    • khóa HSK
+    Bạn có thể hỏi:
+
     <br>
-    • tiếng trung giao tiếp
+
+    • HSK 1-3
+
     <br>
+
+    • HSK 4-6
+
+    <br>
+
+    • tiếng Trung giao tiếp
+
+    <br>
+
     • địa chỉ trung tâm
+
     <br>
-    • học phí
-    <br>
+
     • học online
     `;
 }
 
+/* =========================
+   SEND MESSAGE
+========================= */
+
 function sendMessage(){
 
-    const input = document.getElementById("user-input");
-
-    const text = input.value.trim();
+    const text = userInput.value.trim();
 
     if(text === "") return;
 
     addMessage(text, "user");
 
-    const reply = botReply(text);
+    userInput.value = "";
 
     setTimeout(() => {
 
+        const reply = getBotReply(text);
+
         addMessage(reply, "bot");
 
-    }, 500);
-
-    input.value = "";
+    }, 400);
 }
 
-/* Enter để gửi */
+/* =========================
+   EVENTS
+========================= */
 
-document.getElementById("user-input")
-.addEventListener("keypress", function(e){
+sendBtn.onclick = sendMessage;
+
+userInput.addEventListener("keypress", function(e){
 
     if(e.key === "Enter"){
+
         sendMessage();
     }
 
